@@ -1,7 +1,8 @@
 {
-  "domain": "vodafone_station",
-  "name": "Vodafone Station",
-  "codeowners": ["@paoloantinori", "@chemelli74"],
+  "version": "1.0",
+  "domain": "vodafone_ireland",
+  "name": "Vodafone Ireland",
+  "codeowners": ["@minhtuan27"],
   "config_flow": true,
   "documentation": "https://www.home-assistant.io/integrations/vodafone_station",
   "integration_type": "hub",
