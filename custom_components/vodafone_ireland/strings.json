@@ -11,10 +11,10 @@
       "unknown": "[%key:common::config_flow::error::unknown%]"
     },
     "error": {
-      "already_logged": "[%key:component::vodafone_station::config::abort::already_logged%]",
+      "already_logged": "[%key:component::vodafone_ireland::config::abort::already_logged%]",
       "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
       "invalid_auth": "[%key:common::config_flow::error::invalid_auth%]",
-      "model_not_supported": "[%key:component::vodafone_station::config::abort::model_not_supported%]",
+      "model_not_supported": "[%key:component::vodafone_ireland::config::abort::model_not_supported%]",
       "unknown": "[%key:common::config_flow::error::unknown%]"
     },
     "flow_title": "{host}",
@@ -24,7 +24,7 @@
           "password": "[%key:common::config_flow::data::password%]"
         },
         "data_description": {
-          "password": "[%key:component::vodafone_station::config::step::user::data_description::password%]"
+          "password": "[%key:component::vodafone_ireland::config::step::user::data_description::password%]"
         }
       },
       "reconfigure": {
@@ -34,9 +34,9 @@
           "username": "[%key:common::config_flow::data::username%]"
         },
         "data_description": {
-          "host": "[%key:component::vodafone_station::config::step::user::data_description::host%]",
-          "password": "[%key:component::vodafone_station::config::step::user::data_description::password%]",
-          "username": "[%key:component::vodafone_station::config::step::user::data_description::username%]"
+          "host": "[%key:component::vodafone_ireland::config::step::user::data_description::host%]",
+          "password": "[%key:component::vodafone_ireland::config::step::user::data_description::password%]",
+          "username": "[%key:component::vodafone_ireland::config::step::user::data_description::username%]"
         }
       },
       "user": {

@@ -22,13 +22,13 @@ from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN
-from .coordinator import VodafoneConfigEntry, VodafoneStationRouter
+from .coordinator import VodafoneConfigEntry, VodafoneIrelandRouter
 
 PARALLEL_UPDATES = 0
 
 
 @dataclass(frozen=True, kw_only=True)
-class VodafoneStationEntityDescription(SwitchEntityDescription):
+class VodafoneIrelandEntityDescription(SwitchEntityDescription):
     """Vodafone Station entity description."""
 
     band: WifiBand
@@ -36,25 +36,25 @@ class VodafoneStationEntityDescription(SwitchEntityDescription):
 
 
 SWITCHES: Final = (
-    VodafoneStationEntityDescription(
+    VodafoneIrelandEntityDescription(
         key="main",
         translation_key="main",
         band=WifiBand.BAND_2_4_GHZ,
         typology=WifiType.MAIN,
     ),
-    VodafoneStationEntityDescription(
+    VodafoneIrelandEntityDescription(
         key="guest",
         translation_key="guest",
         band=WifiBand.BAND_2_4_GHZ,
         typology=WifiType.GUEST,
     ),
-    VodafoneStationEntityDescription(
+    VodafoneIrelandEntityDescription(
         key="main_5g",
         translation_key="main_5g",
         band=WifiBand.BAND_5_GHZ,
         typology=WifiType.MAIN,
     ),
-    VodafoneStationEntityDescription(
+    VodafoneIrelandEntityDescription(
         key="guest_5g",
         translation_key="guest_5g",
         band=WifiBand.BAND_5_GHZ,
@@ -81,16 +81,16 @@ async def async_setup_entry(
     )
 
 
-class VodafoneSwitchEntity(CoordinatorEntity[VodafoneStationRouter], SwitchEntity):
+class VodafoneSwitchEntity(CoordinatorEntity[VodafoneIrelandRouter], SwitchEntity):
     """Switch device."""
 
     _attr_has_entity_name = True
-    entity_description: VodafoneStationEntityDescription
+    entity_description: VodafoneIrelandEntityDescription
 
     def __init__(
         self,
-        coordinator: VodafoneStationRouter,
-        description: VodafoneStationEntityDescription,
+        coordinator: VodafoneIrelandRouter,
+        description: VodafoneIrelandEntityDescription,
     ) -> None:
         """Initialize switch device."""
         super().__init__(coordinator)

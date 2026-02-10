@@ -4,7 +4,7 @@ import logging
 
 _LOGGER = logging.getLogger(__package__)
 
-DOMAIN = "vodafone_station"
+DOMAIN = "vodafone_ireland"
 SCAN_INTERVAL = 30
 
 CONF_DEVICE_DETAILS = "device_details"

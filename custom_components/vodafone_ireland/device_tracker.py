@@ -11,8 +11,8 @@ from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from .const import _LOGGER
 from .coordinator import (
     VodafoneConfigEntry,
-    VodafoneStationDeviceInfo,
-    VodafoneStationRouter,
+    VodafoneIrelandDeviceInfo,
+    VodafoneIrelandRouter,
 )
 
 # Coordinator is used to centralize the data updates
@@ -47,7 +47,7 @@ async def async_setup_entry(
 
 @callback
 def async_add_new_tracked_entities(
-    coordinator: VodafoneStationRouter,
+    coordinator: VodafoneIrelandRouter,
     async_add_entities: AddConfigEntryEntitiesCallback,
     tracked: set[str],
 ) -> None:
@@ -59,13 +59,13 @@ def async_add_new_tracked_entities(
         if mac in tracked:
             continue
         _LOGGER.debug("New device tracker: %s", device_info.device.name)
-        new_tracked.append(VodafoneStationTracker(coordinator, device_info))
+        new_tracked.append(VodafoneIrelandTracker(coordinator, device_info))
         tracked.add(mac)
 
     async_add_entities(new_tracked)
 
 
-class VodafoneStationTracker(CoordinatorEntity[VodafoneStationRouter], ScannerEntity):
+class VodafoneIrelandTracker(CoordinatorEntity[VodafoneIrelandRouter], ScannerEntity):
     """Representation of a Vodafone Station device."""
 
     _attr_translation_key = "device_tracker"
@@ -73,7 +73,7 @@ class VodafoneStationTracker(CoordinatorEntity[VodafoneStationRouter], ScannerEn
     mac_address: str
 
     def __init__(
-        self, coordinator: VodafoneStationRouter, device_info: VodafoneStationDeviceInfo
+        self, coordinator: VodafoneIrelandRouter, device_info: VodafoneIrelandDeviceInfo
     ) -> None:
         """Initialize a Vodafone Station device."""
         super().__init__(coordinator)
@@ -86,7 +86,7 @@ class VodafoneStationTracker(CoordinatorEntity[VodafoneStationRouter], ScannerEn
         )
 
     @property
-    def _device_info(self) -> VodafoneStationDeviceInfo:
+    def _device_info(self) -> VodafoneIrelandDeviceInfo:
         """Return fresh data for the device."""
         return self.coordinator.data.devices[self.mac_address]
 

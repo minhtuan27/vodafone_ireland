@@ -26,29 +26,29 @@ from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import _LOGGER, DOMAIN
-from .coordinator import VodafoneConfigEntry, VodafoneStationRouter
+from .coordinator import VodafoneConfigEntry, VodafoneIrelandRouter
 
 # Coordinator is used to centralize the data updates
 PARALLEL_UPDATES = 0
 
 
 @dataclass(frozen=True, kw_only=True)
-class VodafoneStationEntityDescription(ButtonEntityDescription):
+class VodafoneIrelandEntityDescription(ButtonEntityDescription):
     """Vodafone Station entity description."""
 
-    press_action: Callable[[VodafoneStationRouter], Any]
+    press_action: Callable[[VodafoneIrelandRouter], Any]
     is_suitable: Callable[[dict], bool]
 
 
 BUTTON_TYPES: Final = (
-    VodafoneStationEntityDescription(
+    VodafoneIrelandEntityDescription(
         key="reboot",
         device_class=ButtonDeviceClass.RESTART,
         entity_category=EntityCategory.CONFIG,
         press_action=lambda coordinator: coordinator.api.restart_router(),
         is_suitable=lambda _: True,
     ),
-    VodafoneStationEntityDescription(
+    VodafoneIrelandEntityDescription(
         key="dsl_ready",
         translation_key="dsl_reconnect",
         device_class=ButtonDeviceClass.RESTART,
@@ -56,7 +56,7 @@ BUTTON_TYPES: Final = (
         press_action=lambda coordinator: coordinator.api.restart_connection("dsl"),
         is_suitable=lambda info: info.get("dsl_ready") == "1",
     ),
-    VodafoneStationEntityDescription(
+    VodafoneIrelandEntityDescription(
         key="fiber_ready",
         translation_key="fiber_reconnect",
         device_class=ButtonDeviceClass.RESTART,
@@ -64,7 +64,7 @@ BUTTON_TYPES: Final = (
         press_action=lambda coordinator: coordinator.api.restart_connection("fiber"),
         is_suitable=lambda info: info.get("fiber_ready") == "1",
     ),
-    VodafoneStationEntityDescription(
+    VodafoneIrelandEntityDescription(
         key="vf_internet_key_online_since",
         translation_key="internet_key_reconnect",
         device_class=ButtonDeviceClass.RESTART,
@@ -90,24 +90,24 @@ async def async_setup_entry(
     sensors_data = coordinator.data.sensors
 
     async_add_entities(
-        VodafoneStationSensorEntity(coordinator, sensor_descr)
+        VodafoneIrelandSensorEntity(coordinator, sensor_descr)
         for sensor_descr in BUTTON_TYPES
         if sensor_descr.is_suitable(sensors_data)
     )
 
 
-class VodafoneStationSensorEntity(
-    CoordinatorEntity[VodafoneStationRouter], ButtonEntity
+class VodafoneIrelandSensorEntity(
+    CoordinatorEntity[VodafoneIrelandRouter], ButtonEntity
 ):
     """Representation of a Vodafone Station button."""
 
     _attr_has_entity_name = True
-    entity_description: VodafoneStationEntityDescription
+    entity_description: VodafoneIrelandEntityDescription
 
     def __init__(
         self,
-        coordinator: VodafoneStationRouter,
-        description: VodafoneStationEntityDescription,
+        coordinator: VodafoneIrelandRouter,
+        description: VodafoneIrelandEntityDescription,
     ) -> None:
         """Initialize a Vodafone Station sensor."""
         super().__init__(coordinator)

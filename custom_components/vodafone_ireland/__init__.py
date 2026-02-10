@@ -7,7 +7,7 @@ from homeassistant.const import CONF_HOST, Platform
 from homeassistant.core import HomeAssistant
 
 from .const import _LOGGER, CONF_DEVICE_DETAILS, DEVICE_TYPE, DEVICE_URL
-from .coordinator import VodafoneConfigEntry, VodafoneStationRouter
+from .coordinator import VodafoneConfigEntry, VodafoneIrelandRouter
 from .utils import async_client_session
 
 PLATFORMS = [
@@ -22,7 +22,7 @@ PLATFORMS = [
 async def async_setup_entry(hass: HomeAssistant, entry: VodafoneConfigEntry) -> bool:
     """Set up Vodafone Station platform."""
     session = await async_client_session(hass)
-    coordinator = VodafoneStationRouter(
+    coordinator = VodafoneIrelandRouter(
         hass,
         entry,
         session,

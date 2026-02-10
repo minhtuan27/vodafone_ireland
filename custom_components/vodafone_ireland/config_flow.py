@@ -75,7 +75,7 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str,
     }
 
 
-class VodafoneStationConfigFlow(ConfigFlow, domain=DOMAIN):
+class VodafoneIrelandConfigFlow(ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Vodafone Station."""
 
     VERSION = 1
@@ -85,9 +85,9 @@ class VodafoneStationConfigFlow(ConfigFlow, domain=DOMAIN):
     @callback
     def async_get_options_flow(
         config_entry: VodafoneConfigEntry,
-    ) -> VodafoneStationOptionsFlowHandler:
+    ) -> VodafoneIrelandOptionsFlowHandler:
         """Get the options flow for this handler."""
-        return VodafoneStationOptionsFlowHandler()
+        return VodafoneIrelandOptionsFlowHandler()
 
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
@@ -207,7 +207,7 @@ class VodafoneStationConfigFlow(ConfigFlow, domain=DOMAIN):
         )
 
 
-class VodafoneStationOptionsFlowHandler(OptionsFlowWithReload):
+class VodafoneIrelandOptionsFlowHandler(OptionsFlowWithReload):
     """Handle a option flow."""
 
     async def async_step_init(

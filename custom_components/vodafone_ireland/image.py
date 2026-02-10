@@ -14,7 +14,7 @@ from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import _LOGGER
-from .coordinator import VodafoneConfigEntry, VodafoneStationRouter
+from .coordinator import VodafoneConfigEntry, VodafoneIrelandRouter
 
 # Coordinator is used to centralize the data updates
 PARALLEL_UPDATES = 0
@@ -53,7 +53,7 @@ async def async_setup_entry(
 
 
 class VodafoneGuestWifiQRImage(
-    CoordinatorEntity[VodafoneStationRouter],
+    CoordinatorEntity[VodafoneIrelandRouter],
     ImageEntity,
 ):
     """Implementation of the Guest wifi QR code image entity."""
@@ -65,7 +65,7 @@ class VodafoneGuestWifiQRImage(
     def __init__(
         self,
         hass: HomeAssistant,
-        coordinator: VodafoneStationRouter,
+        coordinator: VodafoneIrelandRouter,
         description: ImageEntityDescription,
     ) -> None:
         """Initialize QR code image entity."""

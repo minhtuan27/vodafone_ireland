@@ -18,7 +18,7 @@ from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import _LOGGER, LINE_TYPES
-from .coordinator import VodafoneConfigEntry, VodafoneStationRouter
+from .coordinator import VodafoneConfigEntry, VodafoneIrelandRouter
 
 # Coordinator is used to centralize the data updates
 PARALLEL_UPDATES = 0
@@ -28,18 +28,18 @@ UPTIME_DEVIATION = 60
 
 
 @dataclass(frozen=True, kw_only=True)
-class VodafoneStationEntityDescription(SensorEntityDescription):
+class VodafoneIrelandEntityDescription(SensorEntityDescription):
     """Vodafone Station entity description."""
 
     value: Callable[
-        [VodafoneStationRouter, str | datetime | float | None, str],
+        [VodafoneIrelandRouter, str | datetime | float | None, str],
         str | datetime | float | None,
     ] = lambda coordinator, last_value, key: coordinator.data.sensors[key]
     is_suitable: Callable[[dict], bool] = lambda val: True
 
 
 def _calculate_uptime(
-    coordinator: VodafoneStationRouter,
+    coordinator: VodafoneIrelandRouter,
     last_value: str | datetime | float | None,
     key: str,
 ) -> datetime:
@@ -57,7 +57,7 @@ def _calculate_uptime(
 
 
 def _line_connection(
-    coordinator: VodafoneStationRouter,
+    coordinator: VodafoneIrelandRouter,
     last_value: str | datetime | float | None,
     key: str,
 ) -> str | None:
@@ -82,65 +82,65 @@ def _line_connection(
 
 
 SENSOR_TYPES: Final = (
-    VodafoneStationEntityDescription(
+    VodafoneIrelandEntityDescription(
         key="wan_ip4_addr",
         translation_key="external_ipv4",
         is_suitable=lambda info: info["wan_ip4_addr"] not in NOT_AVAILABLE,
     ),
-    VodafoneStationEntityDescription(
+    VodafoneIrelandEntityDescription(
         key="wan_ip6_addr",
         translation_key="external_ipv6",
         is_suitable=lambda info: info["wan_ip6_addr"] not in NOT_AVAILABLE,
     ),
-    VodafoneStationEntityDescription(
+    VodafoneIrelandEntityDescription(
         key="vf_internet_key_ip_addr",
         translation_key="external_ip_key",
         is_suitable=lambda info: info["vf_internet_key_ip_addr"] not in NOT_AVAILABLE,
     ),
-    VodafoneStationEntityDescription(
+    VodafoneIrelandEntityDescription(
         key="inter_ip_address",
         translation_key="active_connection",
         device_class=SensorDeviceClass.ENUM,
         options=LINE_TYPES,
         value=_line_connection,
     ),
-    VodafoneStationEntityDescription(
+    VodafoneIrelandEntityDescription(
         key="down_str",
         translation_key="down_stream",
         device_class=SensorDeviceClass.DATA_RATE,
         native_unit_of_measurement=UnitOfDataRate.KILOBYTES_PER_SECOND,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
-    VodafoneStationEntityDescription(
+    VodafoneIrelandEntityDescription(
         key="up_str",
         translation_key="up_stream",
         device_class=SensorDeviceClass.DATA_RATE,
         native_unit_of_measurement=UnitOfDataRate.KILOBYTES_PER_SECOND,
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
-    VodafoneStationEntityDescription(
+    VodafoneIrelandEntityDescription(
         key="fw_version",
         translation_key="fw_version",
         entity_category=EntityCategory.DIAGNOSTIC,
     ),
-    VodafoneStationEntityDescription(
+    VodafoneIrelandEntityDescription(
         key="phone_num1",
         translation_key="phone_num1",
         is_suitable=lambda info: info["phone_num1"] != "",
     ),
-    VodafoneStationEntityDescription(
+    VodafoneIrelandEntityDescription(
         key="phone_num2",
         translation_key="phone_num2",
         is_suitable=lambda info: info["phone_num2"] != "",
     ),
-    VodafoneStationEntityDescription(
+    VodafoneIrelandEntityDescription(
         key="sys_uptime",
         translation_key="sys_uptime",
         device_class=SensorDeviceClass.TIMESTAMP,
         entity_category=EntityCategory.DIAGNOSTIC,
         value=_calculate_uptime,
     ),
-    VodafoneStationEntityDescription(
+    VodafoneIrelandEntityDescription(
         key="sys_cpu_usage",
         translation_key="sys_cpu_usage",
         native_unit_of_measurement=PERCENTAGE,
@@ -149,7 +149,7 @@ SENSOR_TYPES: Final = (
             coordinator.data.sensors[key][:-1]
         ),
     ),
-    VodafoneStationEntityDescription(
+    VodafoneIrelandEntityDescription(
         key="sys_memory_usage",
         translation_key="sys_memory_usage",
         native_unit_of_measurement=PERCENTAGE,
@@ -158,7 +158,7 @@ SENSOR_TYPES: Final = (
             coordinator.data.sensors[key][:-1]
         ),
     ),
-    VodafoneStationEntityDescription(
+    VodafoneIrelandEntityDescription(
         key="sys_reboot_cause",
         translation_key="sys_reboot_cause",
         entity_category=EntityCategory.DIAGNOSTIC,
@@ -179,24 +179,24 @@ async def async_setup_entry(
     sensors_data = coordinator.data.sensors
 
     async_add_entities(
-        VodafoneStationSensorEntity(coordinator, sensor_descr)
+        VodafoneIrelandSensorEntity(coordinator, sensor_descr)
         for sensor_descr in SENSOR_TYPES
         if sensor_descr.key in sensors_data and sensor_descr.is_suitable(sensors_data)
     )
 
 
-class VodafoneStationSensorEntity(
-    CoordinatorEntity[VodafoneStationRouter], SensorEntity
+class VodafoneIrelandSensorEntity(
+    CoordinatorEntity[VodafoneIrelandRouter], SensorEntity
 ):
     """Representation of a Vodafone Station sensor."""
 
     _attr_has_entity_name = True
-    entity_description: VodafoneStationEntityDescription
+    entity_description: VodafoneIrelandEntityDescription
 
     def __init__(
         self,
-        coordinator: VodafoneStationRouter,
-        description: VodafoneStationEntityDescription,
+        coordinator: VodafoneIrelandRouter,
+        description: VodafoneIrelandEntityDescription,
     ) -> None:
         """Initialize a Vodafone Station sensor."""
         super().__init__(coordinator)

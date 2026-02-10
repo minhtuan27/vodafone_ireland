@@ -7,7 +7,7 @@ from typing import Any, cast
 
 from aiohttp import ClientSession
 from aiovodafone import exceptions
-from aiovodafone.api import VodafoneStationDevice
+from aiovodafone.api import VodafoneIrelandDevice
 from aiovodafone.models import init_device_class
 from yarl import URL
 
@@ -36,14 +36,14 @@ from .helpers import cleanup_device_tracker
 
 CONSIDER_HOME_SECONDS = DEFAULT_CONSIDER_HOME.total_seconds()
 
-type VodafoneConfigEntry = ConfigEntry[VodafoneStationRouter]
+type VodafoneConfigEntry = ConfigEntry[VodafoneIrelandRouter]
 
 
 @dataclass(slots=True)
-class VodafoneStationDeviceInfo:
+class VodafoneIrelandDeviceInfo:
     """Representation of a device connected to the Vodafone Station."""
 
-    device: VodafoneStationDevice
+    device: VodafoneIrelandDevice
     update_time: datetime | None
     home: bool
 
@@ -52,12 +52,12 @@ class VodafoneStationDeviceInfo:
 class UpdateCoordinatorDataType:
     """Update coordinator data type."""
 
-    devices: dict[str, VodafoneStationDeviceInfo]
+    devices: dict[str, VodafoneIrelandDeviceInfo]
     sensors: dict[str, Any]
     wifi: dict[str, Any]
 
 
-class VodafoneStationRouter(DataUpdateCoordinator[UpdateCoordinatorDataType]):
+class VodafoneIrelandRouter(DataUpdateCoordinator[UpdateCoordinatorDataType]):
     """Queries router running Vodafone Station firmware."""
 
     config_entry: VodafoneConfigEntry
@@ -100,7 +100,7 @@ class VodafoneStationRouter(DataUpdateCoordinator[UpdateCoordinatorDataType]):
         }
 
     def _calculate_update_time_and_consider_home(
-        self, device: VodafoneStationDevice, utc_point_in_time: datetime
+        self, device: VodafoneIrelandDevice, utc_point_in_time: datetime
     ) -> tuple[datetime | None, bool]:
         """Return update time and consider home.
 
@@ -160,7 +160,7 @@ class VodafoneStationRouter(DataUpdateCoordinator[UpdateCoordinatorDataType]):
 
         utc_point_in_time = dt_util.utcnow()
         data_devices = {
-            dev_info.mac: VodafoneStationDeviceInfo(
+            dev_info.mac: VodafoneIrelandDeviceInfo(
                 dev_info,
                 *self._calculate_update_time_and_consider_home(
                     dev_info, utc_point_in_time
