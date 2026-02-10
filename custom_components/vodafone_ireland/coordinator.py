@@ -7,7 +7,7 @@ from typing import Any, cast
 
 from aiohttp import ClientSession
 from aiovodafone import exceptions
-from aiovodafone.api import VodafoneIrelandDevice
+from aiovodafone.api import VodafoneStationDevice
 from aiovodafone.models import init_device_class
 from yarl import URL
 
@@ -43,7 +43,7 @@ type VodafoneConfigEntry = ConfigEntry[VodafoneIrelandRouter]
 class VodafoneIrelandDeviceInfo:
     """Representation of a device connected to the Vodafone Station."""
 
-    device: VodafoneIrelandDevice
+    device: VodafoneStationDevice
     update_time: datetime | None
     home: bool
 
@@ -100,7 +100,7 @@ class VodafoneIrelandRouter(DataUpdateCoordinator[UpdateCoordinatorDataType]):
         }
 
     def _calculate_update_time_and_consider_home(
-        self, device: VodafoneIrelandDevice, utc_point_in_time: datetime
+        self, device: VodafoneStationDevice, utc_point_in_time: datetime
     ) -> tuple[datetime | None, bool]:
         """Return update time and consider home.
 
